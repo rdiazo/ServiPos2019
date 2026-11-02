@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto · ServiPos 2019</title>
+  <meta name="description" content="Contacta a ServiPos 2019 para soporte técnico, planes de mantenimiento o cotizaciones de Puntos de Venta, Cajeros Automáticos y suministros.">
+  <meta name="theme-color" content="#f8fafc">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Tema antes de pintar (evita parpadeo). Ver components/theme.js -->
+  <script>
+    (function () {
+      var t; try { t = localStorage.getItem("sp-theme"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+</head>
+
+<body data-page="contact">
+  <div data-mount="header"></div>
+
+  <main id="main">
+    <section class="page-hero" style="padding-bottom:0">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ruta"><a href="index.html">Inicio</a><span>/</span><span>Contacto</span></nav>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:24px">
+      <div class="container contact-page">
+
+        <!-- ===== Columna informativa ===== -->
+        <aside class="contact-page__aside">
+          <span class="eyebrow">Contacto</span>
+          <h1 style="font-size:clamp(2rem,1.4rem + 2.4vw,3rem)">Hablemos de tus equipos de cobro.</h1>
+          <p style="margin-top:16px">Déjanos tus datos y te respondemos en un máximo de 48 horas hábiles. Si es urgente, escríbenos por WhatsApp.</p>
+          <ul class="check-list" style="margin-top:24px">
+            <li><span data-icon="check"></span>Planes de mantenimiento para comercios y bancos</li>
+            <li><span data-icon="check"></span>Cotizaciones de reparación, instalación y suministros</li>
+            <li><span data-icon="check"></span>Precios por volumen de equipos</li>
+          </ul>
+          <div class="contact-actions">
+            <a class="btn btn--whatsapp" data-wa href="#" target="_blank" rel="noopener"><span data-icon="whatsapp"></span>WhatsApp</a>
+            <a class="btn btn--outline" data-mail href="#"><span data-icon="mail"></span>Correo</a>
+          </div>
+        </aside>
+
+        <!-- ===== Formulario (components/contact.js) ===== -->
+        <form class="card form-grid form-grid--2" data-contact-form data-title="Contacto" novalidate>
+          <p class="form-section-title span-2">Tus datos</p>
+          <div class="field"><label for="c-nombre">Nombre y apellido *</label><input class="input" id="c-nombre" name="nombre" autocomplete="name" required><span class="error-msg">Campo obligatorio</span></div>
+          <div class="field"><label for="c-telefono">Teléfono / WhatsApp *</label><input class="input" id="c-telefono" name="telefono" type="tel" autocomplete="tel" required><span class="error-msg">Campo obligatorio</span></div>
+          <div class="field span-2"><label for="c-correo">Correo *</label><input class="input" id="c-correo" name="correo" type="email" autocomplete="email" required><span class="error-msg">Correo no válido</span></div>
+
+          <p class="form-section-title span-2">Tu comercio</p>
+          <div class="field"><label for="c-empresa">Comercio o empresa</label><input class="input" id="c-empresa" name="empresa" autocomplete="organization"></div>
+          <div class="field"><label for="c-tipo">Tipo de cliente *</label>
+            <select class="select" id="c-tipo" name="tipo_cliente" required>
+              <option value="">Selecciona…</option><option>Comercio</option><option>Cadena / franquicia</option><option>Entidad bancaria</option><option>Particular</option>
+            </select><span class="error-msg">Selecciona una opción</span></div>
+          <div class="field"><label for="c-equipos">Equipos</label>
+            <select class="select" id="c-equipos" name="equipos">
+              <option value="">Selecciona…</option><option>Puntos de venta</option><option>Cajeros automáticos</option><option>Ambos</option><option>Solo suministros</option>
+            </select></div>
+          <div class="field"><label for="c-ciudad">Ciudad *</label><input class="input" id="c-ciudad" name="ciudad" autocomplete="address-level2" required><span class="error-msg">Indica la ciudad</span></div>
+          <div class="field span-2"><label for="c-mensaje">¿En qué te ayudamos? *</label><textarea class="textarea" id="c-mensaje" name="mensaje" placeholder="Plan de mantenimiento, cotización de rollos, instalación…" required></textarea><span class="error-msg">Cuéntanos brevemente qué necesitas</span></div>
+
+          <label class="checkbox span-2"><input type="checkbox" name="acepta" required> Acepto que ServiPos 2019 use estos datos para contactarme (<a href="#" data-legal="privacidad" style="text-decoration:underline">privacidad</a>).</label>
+          <div class="span-2" style="display:flex;flex-wrap:wrap;gap:10px">
+            <button class="btn btn--primary btn--lg" type="submit" data-channel="whatsapp" style="flex:1 1 220px"><span data-icon="whatsapp"></span>Enviar por WhatsApp</button>
+            <button class="btn btn--outline btn--lg" type="submit" data-channel="email" style="flex:1 1 180px"><span data-icon="mail"></span>Enviar por correo</button>
+          </div>
+        </form>
+
+      </div>
+    </section>
+  </main>
+
+  <div data-mount="footer"></div>
+
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/js/utils.js"></script>
+  <script defer src="assets/js/data/services.js"></script>
+  <script defer src="assets/js/components/layout.js"></script>
+  <script defer src="assets/js/components/theme.js"></script>
+  <script defer src="assets/js/components/nav.js"></script>
+  <script defer src="assets/js/components/modal.js"></script>
+  <script defer src="assets/js/components/status.js"></script>
+  <script defer src="assets/js/components/contact.js"></script>
+  <script defer src="assets/js/components/hydrate.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</body>
+</html>

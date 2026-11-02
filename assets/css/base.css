@@ -1,0 +1,140 @@
+/* ==========================================================================
+   base.css · tokens de diseño, reset y tipografía
+   --------------------------------------------------------------------------
+   Todo el color del sitio sale de estas variables. Para cambiar la marca
+   basta con editar el bloque :root (claro) y el bloque de tema oscuro.
+   El tema se controla con el atributo data-theme en <html>
+   (lo fija assets/js/components/theme.js; ver también el script inline del <head>).
+   ========================================================================== */
+
+/* ---------- 1. Tokens · tema claro ---------- */
+:root {
+  /* Superficies */
+  --bg: #f8fafc;              /* blanco roto de fondo */
+  --surface: #ffffff;         /* tarjetas y bloques */
+  --surface-2: #f1f5f9;       /* bloques secundarios, inputs */
+  --border: #e2e8f0;          /* bordes finos (ghost cards) */
+  --border-strong: #cbd5e1;
+
+  /* Texto */
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-soft: #64748b;
+
+  /* Marca: azul cobalto + verde esmeralda "operativo" */
+  --primary: #1d4ed8;
+  --primary-hover: #1e40af;
+  --primary-soft: #eff4ff;
+  --on-primary: #ffffff;
+  --accent: #059669;
+  --accent-soft: #ecfdf5;
+  --danger: #dc2626;
+  --warning: #d97706;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.05);
+  --shadow-md: 0 8px 24px -8px rgb(15 23 42 / 0.12);
+  --shadow-lg: 0 24px 48px -16px rgb(15 23 42 / 0.18);
+
+  /* Forma y ritmo */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --container: 1180px;
+  --gutter: 16px;
+  --header-h: 68px;
+  --section-y: clamp(64px, 9vw, 112px);
+
+  /* Tipografía */
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.9rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-h3: 1.2rem;
+  --fs-h2: clamp(1.75rem, 1.2rem + 2.2vw, 2.6rem);
+  --fs-h1: clamp(2.1rem, 1.3rem + 3.6vw, 3.7rem);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --map-filter: grayscale(1) contrast(1.05) brightness(1.02);
+  --logo-plate: #0f172a;
+
+  color-scheme: light;
+}
+
+/* ---------- 2. Tokens · tema oscuro ---------- */
+:root[data-theme="dark"] {
+  --bg: #0a0f1c;
+  --surface: #111827;
+  --surface-2: #172033;
+  --border: #1f2a3d;
+  --border-strong: #2c3a52;
+
+  --text: #e8edf5;
+  --text-muted: #a3b0c4;
+  --text-soft: #7d8ba1;
+
+  --primary: #4f7cff;
+  --primary-hover: #6b91ff;
+  --primary-soft: #16213d;
+  --on-primary: #ffffff;
+  --accent: #34d399;
+  --accent-soft: #0f2a24;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 8px 24px -8px rgb(0 0 0 / 0.55);
+  --shadow-lg: 0 24px 48px -16px rgb(0 0 0 / 0.7);
+
+  --map-filter: invert(0.92) hue-rotate(180deg) grayscale(0.85) contrast(0.95);
+  --logo-plate: #2a3a5c;
+
+  color-scheme: dark;
+}
+
+/* ---------- 3. Reset mínimo ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .3s var(--ease), color .3s var(--ease);
+  overflow-x: hidden;
+}
+img, svg, video, iframe { display: block; max-width: 100%; }
+img { height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; }
+a { color: inherit; text-decoration: none; }
+ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+
+/* ---------- 4. Tipografía ---------- */
+h1, h2, h3, h4 { line-height: 1.12; letter-spacing: -0.025em; font-weight: 800; color: var(--text); text-wrap: balance; }
+h1 { font-size: var(--fs-h1); letter-spacing: -0.035em; }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); font-weight: 700; letter-spacing: -0.015em; }
+p { color: var(--text-muted); text-wrap: pretty; }
+strong { color: var(--text); font-weight: 650; }
+
+/* ---------- 5. Accesibilidad ---------- */
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 6px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: fixed; top: 8px; left: 8px; z-index: 200; padding: 10px 16px;
+  background: var(--primary); color: var(--on-primary); border-radius: var(--radius-sm);
+  transform: translateY(-150%); transition: transform .2s;
+}
+.skip-link:focus { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

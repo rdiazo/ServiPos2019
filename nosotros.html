@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nosotros · ServiPos 2019</title>
+  <meta name="description" content="Conoce a ServiPos 2019: misión, equipo técnico y aliados comerciales en Maracay, Venezuela.">
+  <meta name="theme-color" content="#f8fafc">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Tema antes de pintar (evita parpadeo). Ver components/theme.js -->
+  <script>
+    (function () {
+      var t; try { t = localStorage.getItem("sp-theme"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+</head>
+
+<body data-page="about">
+  <div data-mount="header"></div>
+
+  <main id="main">
+
+    <!-- ===== Encabezado de página ===== -->
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ruta"><a href="index.html">Inicio</a><span>/</span><span>Nosotros</span></nav>
+        <span class="eyebrow">Somos ServiPos 2019</span>
+        <h1>Más de 10 años cuidando la infraestructura de pago del país.</h1>
+        <p>Empresa proveedora de servicios técnicos de instalación, reparación, mantenimiento preventivo y suministro de partes, piezas y consumibles para las plataformas de pago electrónico del Sistema Financiero Nacional.</p>
+      </div>
+    </section>
+
+    <!-- ===== Métricas ===== -->
+    <section class="trust" aria-label="Cifras de ServiPos 2019">
+      <div class="container trust__grid" data-mount="stats"></div>
+    </section>
+
+    <!-- ===== Misión / Fortaleza / Compromiso ===== -->
+    <section class="section" aria-labelledby="mission-title">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Nuestra empresa</span>
+          <h2 id="mission-title">Experiencia, probidad y mística.</h2>
+        </header>
+        <div class="pillars">
+          <article class="card reveal">
+            <span class="icon-badge"><span data-icon="shield"></span></span>
+            <h3>Misión</h3>
+            <p>Fortalecer la economía del país prestando servicios integrales de alta calidad, comprometidos con la protección y seguridad de los terminales de puntos de venta, con un servicio técnico especializado y leal a nuestras políticas y acuerdos.</p>
+          </article>
+          <article class="card reveal">
+            <span class="icon-badge"><span data-icon="chip"></span></span>
+            <h3>Nuestra fortaleza</h3>
+            <p>La comprobada experiencia, probidad y mística de nuestro personal técnico, junto a un stock de partes y repuestos originales certificados por sus fabricantes.</p>
+          </article>
+          <article class="card reveal">
+            <span class="icon-badge icon-badge--accent"><span data-icon="checkCircle"></span></span>
+            <h3>Compromiso</h3>
+            <p>Seriedad, seguridad, puntualidad y un costo estable: tarifas pactadas al suscribir el convenio, con ajustes semestrales o según la cantidad de equipos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Equipo completo ===== -->
+    <section class="section section--alt" id="equipo" aria-labelledby="team-title">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Nuestro equipo</span>
+          <h2 id="team-title">Profesionales con amplia experiencia en POS y cajeros automáticos.</h2>
+        </header>
+        <div class="team__grid" data-mount="team"></div>
+      </div>
+    </section>
+
+    <!-- ===== Aliados ===== -->
+    <section class="partners" style="padding-top:56px" aria-label="Aliados comerciales">
+      <div class="container">
+        <p class="partners__title">Nuestros aliados comerciales</p>
+        <div class="partners__track" data-mount="partners"></div>
+      </div>
+    </section>
+
+    <!-- ===== Banda CTA ===== -->
+    <section class="section" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2 id="cta-title">Trabajemos juntos.</h2>
+            <p>Cuéntanos cuántos equipos tienes y te proponemos un plan de soporte a la medida.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--light btn--lg" href="contacto.html"><span data-icon="mail"></span>Contactar</a>
+            <a class="btn btn--outline btn--line btn--lg" data-wa href="#" target="_blank" rel="noopener"><span data-icon="whatsapp"></span>WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div data-mount="footer"></div>
+
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/js/utils.js"></script>
+  <script defer src="assets/js/data/services.js"></script>
+  <script defer src="assets/js/data/team.js"></script>
+  <script defer src="assets/js/data/partners.js"></script>
+  <script defer src="assets/js/components/layout.js"></script>
+  <script defer src="assets/js/components/theme.js"></script>
+  <script defer src="assets/js/components/nav.js"></script>
+  <script defer src="assets/js/components/modal.js"></script>
+  <script defer src="assets/js/components/status.js"></script>
+  <script defer src="assets/js/components/trust.js"></script>
+  <script defer src="assets/js/components/team.js"></script>
+  <script defer src="assets/js/components/hydrate.js"></script>
+  <script defer src="assets/js/components/reveal.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</body>
+</html>

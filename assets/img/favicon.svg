@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <g transform="rotate(-8 24 24)">
+    <rect x="6" y="3" width="36" height="42" rx="9" fill="#0f172a"/>
+    <text x="24" y="27" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="19" fill="#fff">SP</text>
+    <rect x="12" y="33" width="6.5" height="5" rx="1.2" fill="#ef4444"/>
+    <rect x="20.75" y="33" width="6.5" height="5" rx="1.2" fill="#f5c518"/>
+    <rect x="29.5" y="33" width="6.5" height="5" rx="1.2" fill="#22c55e"/>
+  </g>
+</svg>

@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ServiPos 2019 · Soporte técnico para Puntos de Venta y Cajeros Automáticos</title>
+  <meta name="description" content="Instalación, mantenimiento y reparación de Puntos de Venta (POS) y Cajeros Automáticos en Maracay, Venezuela. Repuestos originales y rollos de papel térmico.">
+  <meta name="theme-color" content="#f8fafc">
+  <meta property="og:title" content="ServiPos 2019 · Soporte técnico para pagos electrónicos">
+  <meta property="og:description" content="Infraestructura y soporte técnico para pagos electrónicos sin interrupciones.">
+  <meta property="og:image" content="assets/img/hero-tecnico.png">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Tema antes de pintar (evita parpadeo). Ver components/theme.js -->
+  <script>
+    (function () {
+      var t; try { t = localStorage.getItem("sp-theme"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+</head>
+
+<body data-page="home">
+  <!-- Header + menú móvil (components/layout.js) -->
+  <div data-mount="header"></div>
+
+  <main id="main">
+
+    <!-- =========================================================
+         1. HERO · propuesta de valor
+         ========================================================= -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero__grid">
+        <div>
+          <span class="status hero__status" data-status>
+            <span class="status__dot"></span><span data-status-text>Centro de soporte en Maracay</span>
+          </span>
+          <h1 id="hero-title">Infraestructura y soporte técnico para pagos electrónicos <span>sin interrupciones.</span></h1>
+          <p class="hero__lead">Instalación, mantenimiento y reparación de Puntos de Venta (POS) y Cajeros Automáticos para comercios y banca en Venezuela.</p>
+
+          <div class="hero__ctas">
+            <a class="btn btn--primary btn--lg" data-wa href="#" target="_blank" rel="noopener" data-wa-text="Hola ServiPos 2019, quiero hablar con un técnico.">
+              <span data-icon="whatsapp"></span>Hablar con un Técnico
+            </a>
+            <a class="btn btn--outline btn--lg" href="#servicios">Explorar Servicios <span data-icon="arrowRight"></span></a>
+          </div>
+
+          <div class="hero__meta">
+            <span><span data-icon="checkCircle"></span>Repuestos originales</span>
+            <span><span data-icon="checkCircle"></span>Atención multimarca</span>
+            <span><span data-icon="checkCircle"></span>Sede física en Maracay</span>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <img src="assets/img/hero-tecnico.png" alt="Terminales de punto de venta y cajero automático atendidos por ServiPos 2019" width="800" height="800" fetchpriority="high">
+          <div class="hero__chip hero__chip--a">
+            <span class="icon-badge icon-badge--accent"><span data-icon="shield"></span></span>
+            <div>Equipo operativo<small>Diagnóstico certificado</small></div>
+          </div>
+          <div class="hero__chip hero__chip--b">
+            <span class="icon-badge"><span data-icon="bolt"></span></span>
+            <div>Respuesta rápida<small>Menos tiempo sin cobrar</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         2. BARRA DE CONFIANZA · métricas (data/partners.js → stats)
+         ========================================================= -->
+    <section class="trust" aria-label="Cifras de ServiPos 2019">
+      <div class="container trust__grid" data-mount="stats"></div>
+    </section>
+
+    <!-- =========================================================
+         3. ALIADOS · logos (data/partners.js)
+         ========================================================= -->
+    <section class="partners" aria-label="Aliados comerciales">
+      <div class="container">
+        <p class="partners__title">Trabajamos con las plataformas del sistema financiero nacional</p>
+        <div class="partners__track" data-mount="partners"></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         4. SERVICIOS · ghost cards + ficha técnica (data/services.js)
+         ========================================================= -->
+    <section class="section section--alt" id="servicios" aria-labelledby="services-title">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Servicios</span>
+          <h2 id="services-title">Tres pilares para que tus cobros nunca se detengan.</h2>
+          <p>Servicio integral para comercios y entidades bancarias: desde la instalación hasta el último rollo de papel.</p>
+        </header>
+        <div class="services__grid" data-mount="services"></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         5. ¿POR QUÉ SERVIPOS 2019? · diferenciadores
+         ========================================================= -->
+    <section class="section" id="por-que" aria-labelledby="why-title">
+      <div class="container why__grid">
+        <div>
+          <span class="eyebrow">¿Por qué ServiPos 2019?</span>
+          <h2 id="why-title">Experiencia, probidad y cuidado minucioso.</h2>
+          <p style="margin-top:14px">Un equipo técnico con más de 10 años de experiencia y stock de repuestos originales certificados por sus fabricantes.</p>
+
+          <div class="why__list">
+            <div class="why__item reveal">
+              <span class="icon-badge"><span data-icon="pin"></span></span>
+              <div><h3>Atención local directa</h3><p>Sede física en el C.C. Global, Maracay. Trae tu equipo o te visitamos.</p></div>
+            </div>
+            <div class="why__item reveal">
+              <span class="icon-badge"><span data-icon="shield"></span></span>
+              <div><h3>Técnicos certificados</h3><p>Personal capacitado en hardware transaccional y en las plataformas de pago de la banca.</p></div>
+            </div>
+            <div class="why__item reveal">
+              <span class="icon-badge"><span data-icon="bolt"></span></span>
+              <div><h3>Respuesta rápida</h3><p>Minimizamos el tiempo de inactividad de tus cobros con diagnóstico ágil y repuestos en stock.</p></div>
+            </div>
+            <div class="why__item reveal">
+              <span class="icon-badge"><span data-icon="settings"></span></span>
+              <div><h3>Costos estables por convenio</h3><p>Planes de mantenimiento con tarifas pactadas al firmar y ajustes semestrales.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <figure class="why__media reveal">
+          <img src="assets/img/taller.jpg" alt="Técnica trabajando en el laboratorio de reparación" loading="lazy" width="1920" height="1277">
+          <figcaption class="why__badge">
+            <span class="icon-badge icon-badge--accent" style="width:40px;height:40px"><span data-icon="chip"></span></span>
+            <span><strong>Laboratorio propio</strong>Diagnóstico y reparación a nivel de componente</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         6. EQUIPO · fichas destacadas (data/team.js, featured)
+         ========================================================= -->
+    <section class="section section--alt" id="equipo" aria-labelledby="team-title">
+      <div class="container">
+        <header class="section-head section-head--center">
+          <span class="eyebrow">Nuestro equipo</span>
+          <h2 id="team-title">Especialistas al frente de tu tranquilidad operativa.</h2>
+        </header>
+        <div class="team__grid" data-mount="team" data-filter="featured"></div>
+        <div class="team__more">
+          <a class="link-arrow" href="nosotros.html#equipo">Conoce a todo el equipo <span data-icon="arrowRight"></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         7. DIAGNÓSTICO RÁPIDO · stepper (components/diagnostic.js)
+         ========================================================= -->
+    <section class="section" id="diagnostico" aria-labelledby="diag-title">
+      <div class="container diag">
+        <div class="diag__aside">
+          <span class="eyebrow">Diagnóstico rápido</span>
+          <h2 id="diag-title">Cuéntanos qué falla. Te respondemos por WhatsApp.</h2>
+          <p style="margin-top:14px">Tres preguntas y tu solicitud llega directo al técnico de guardia, con toda la información para atenderte sin rodeos.</p>
+          <ul class="check-list">
+            <li><span data-icon="check"></span>Sin registros ni contraseñas</li>
+            <li><span data-icon="check"></span>Toma menos de un minuto</li>
+            <li><span data-icon="check"></span>Atención a comercios, bancos y particulares</li>
+          </ul>
+        </div>
+        <div data-mount="diagnostic"></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         8. UBICACIÓN Y CONTACTO · datos + mapa (components/location.js)
+         ========================================================= -->
+    <section class="section section--alt" id="ubicacion" aria-labelledby="location-title">
+      <div class="container location">
+        <div>
+          <span class="eyebrow">Ubicación</span>
+          <h2 id="location-title">Visítanos en Maracay.</h2>
+          <ul class="contact-list" data-mount="contact-list"></ul>
+          <div class="contact-actions">
+            <a class="btn btn--whatsapp" data-wa href="#" target="_blank" rel="noopener"><span data-icon="whatsapp"></span>Escribir por WhatsApp</a>
+            <a class="btn btn--outline" data-directions href="#" target="_blank" rel="noopener"><span data-icon="route"></span>Cómo llegar</a>
+          </div>
+        </div>
+        <div class="map" data-mount="map"></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         9. BANDA DE CONTACTO
+         ========================================================= -->
+    <section class="section" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2 id="cta-title">¿Tu comercio necesita un aliado técnico?</h2>
+            <p>Escríbenos para planes de mantenimiento, cotizaciones por volumen o suministros.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--light btn--lg" href="contacto.html"><span data-icon="mail"></span>Contactar</a>
+            <a class="btn btn--outline btn--line btn--lg" data-wa href="#" target="_blank" rel="noopener"><span data-icon="whatsapp"></span>WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer (components/layout.js) -->
+  <div data-mount="footer"></div>
+
+  <!-- ===== Scripts: config → utils → datos → componentes → main ===== -->
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/js/utils.js"></script>
+  <script defer src="assets/js/data/services.js"></script>
+  <script defer src="assets/js/data/team.js"></script>
+  <script defer src="assets/js/data/partners.js"></script>
+  <script defer src="assets/js/components/layout.js"></script>
+  <script defer src="assets/js/components/theme.js"></script>
+  <script defer src="assets/js/components/nav.js"></script>
+  <script defer src="assets/js/components/modal.js"></script>
+  <script defer src="assets/js/components/status.js"></script>
+  <script defer src="assets/js/components/trust.js"></script>
+  <script defer src="assets/js/components/services.js"></script>
+  <script defer src="assets/js/components/team.js"></script>
+  <script defer src="assets/js/components/diagnostic.js"></script>
+  <script defer src="assets/js/components/location.js"></script>
+  <script defer src="assets/js/components/hydrate.js"></script>
+  <script defer src="assets/js/components/reveal.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</body>
+</html>
