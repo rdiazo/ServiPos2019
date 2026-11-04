@@ -14,7 +14,7 @@
   const c = SP.components;
 
   const renderers = [c.layout, c.trust, c.services, c.team, c.diagnostic, c.location, c.contact];
-  const behaviors = [c.hydrate, c.theme, c.nav, c.modal, c.status, c.reveal];
+  const behaviors = [c.hydrate, c.theme, c.nav, c.modal, c.status, c.visits, c.reveal];
 
   function boot() {
     document.documentElement.classList.remove("no-js");

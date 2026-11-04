@@ -62,6 +62,13 @@ window.SP.config = {
     endpoint: "",
   },
 
+  /* Contador de visitas del footer (ver api/visitas.php).
+     endpoint vacío = contador oculto. showToday = mostrar también "· N hoy". */
+  visits: {
+    endpoint: "api/visitas.php",
+    showToday: true,
+  },
+
   /* Navegación principal. "href" que empieza por "#" = salto suave dentro
      de la página de inicio; desde otras páginas se resuelve a index.html#… */
   nav: [

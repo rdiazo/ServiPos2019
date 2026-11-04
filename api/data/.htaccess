@@ -1,0 +1,2 @@
+# Impide descargar el archivo de conteo directamente desde el navegador
+Require all denied

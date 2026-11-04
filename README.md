@@ -5,8 +5,8 @@ para Puntos de Venta y Cajeros Automáticos. HTML5 semántico + CSS puro + JavaS
 
 ## Cómo verlo
 
-- Doble clic en `index.html` (funciona sin servidor), o
-- `python -m http.server 5520` dentro de esta carpeta y abrir http://localhost:5520
+- Doble clic en `index.html` (funciona sin servidor, pero sin contador de visitas), o
+- `python tools/dev_server.py 5520` y abrir http://localhost:5520 (incluye el contador de visitas)
 
 ## Páginas
 
@@ -56,6 +56,17 @@ Sin backend, el **diagnóstico** y el **contacto** abren WhatsApp (o el correo) 
 Para guardarlos en una base de datos, coloca una URL en `config.forms.endpoint`
 (Formspree, Google Apps Script, API propia). Se enviará un `POST multipart/form-data` con todos los campos
 y el campo `tipo` (`diagnostico` | `contacto`).
+
+## Contador de visitas
+
+El footer muestra `N visitas · N hoy`. Lo calcula `api/visitas.php` (PHP 7.4+, sin base de datos):
+guarda el conteo en `api/data/visitas.json`, protegido por `api/data/.htaccess`.
+
+- Cada navegador suma **1 visita por sesión** (navegar entre páginas o recargar no infla el número).
+- Los bots conocidos no suman. "Hoy" se reinicia a medianoche, hora de Venezuela.
+- Al publicar, la carpeta `api/data/` debe permitir escritura al servidor (lo normal en SiteGround).
+- Para ocultarlo: deja vacío `visits.endpoint` en `config.js`; para quitar "· N hoy": `showToday: false`.
+- En local, `tools/dev_server.py` imita el PHP con el mismo archivo.
 
 ## Pendiente antes de publicar
 

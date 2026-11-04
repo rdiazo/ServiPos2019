@@ -71,6 +71,7 @@
       '<div class="footer-bottom">' +
       "<span>© " + year + " " + esc(c.company.legalName) + (c.company.rif ? " · RIF " + esc(c.company.rif) : "") + "</span>" +
       '<span class="status" data-status><span class="status__dot"></span><span data-status-text>Centro de soporte en Maracay</span></span>' +
+      '<span class="visits" data-visits hidden>' + icon("eye") + "<span data-visits-text></span></span>" +
       '<nav class="footer-legal" aria-label="Legal"><a href="#" data-legal="privacidad">Privacidad</a><a href="#" data-legal="terminos">Términos</a></nav>' +
       "</div></div></footer>"
     );

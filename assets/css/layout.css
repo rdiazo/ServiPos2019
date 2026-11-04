@@ -87,7 +87,7 @@
 }
 
 /* ---------- Footer ---------- */
-.site-footer { background: var(--surface); border-top: 1px solid var(--border); padding-block: 56px 28px; font-size: var(--fs-sm); }
+.site-footer { background: var(--surface); border-top: 1px solid var(--border); padding-block: 56px 88px; font-size: var(--fs-sm); } /* 88px: espacio para el botón flotante */
 .footer-grid { display: grid; gap: 36px; }
 .footer-brand { color: var(--text); }
 .footer-brand p { margin-top: 14px; max-width: 320px; }
@@ -100,6 +100,15 @@
   margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-soft);
 }
 .footer-legal { display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* Contador de visitas (components/visits.js) */
+.visits {
+  display: inline-flex; align-items: center; gap: 7px; padding: 4px 12px;
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  font-size: var(--fs-xs); font-weight: 550; color: var(--text-muted); font-variant-numeric: tabular-nums;
+}
+.visits[hidden] { display: none; }
+.visits svg { width: 15px; height: 15px; color: var(--text-soft); }
 .footer-legal a:hover { color: var(--text); }
 
 @media (min-width: 768px) { .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
