@@ -57,6 +57,49 @@
 .is-ready .hero__chip--b { animation: enter-pop .6s var(--ease) both 1.2s, bob 7s ease-in-out 1.8s infinite reverse; }
 @keyframes bob { 50% { transform: translateY(-8px); } }
 
+/* ---------- Logo del header (SP.logoMark en utils.js) ----------
+   Al cargar: la insignia gira y aterriza, aparece "SP", se encienden las
+   tres luces en secuencia (rojo → amarillo → verde, como un terminal que
+   arranca) y cruza un destello. En reposo las luces "procesan" cada 7 s.
+   Al pasar el cursor: la insignia se inclina, las luces saltan en cadena
+   y el destello vuelve a cruzar. */
+.site-header .brand__mark { transform-origin: 50% 55%; transition: transform .45s var(--ease); }
+.site-header .brand__mark :is(.brand__letters, .brand__light, .brand__shine) { transform-box: fill-box; transform-origin: center; }
+
+.is-ready .site-header .brand__mark { animation: logo-land .9s var(--ease) backwards .1s; }
+.is-ready .site-header .brand__letters { animation: logo-letters .5s var(--ease) backwards .45s; }
+.is-ready .site-header .brand__light {
+  animation:
+    light-on .45s var(--ease) backwards calc(.7s + var(--n) * .16s),
+    light-scan 7s ease-in-out calc(4s + var(--n) * .14s) infinite;
+}
+.site-header .brand__shine { transform: translateX(-44px); }
+.is-ready .site-header .brand__shine { animation: logo-shine .9s var(--ease) 1.3s; }
+
+/* Nombre: "ServiPos" entra desde la izquierda y "2019" se abre */
+.is-ready .site-header .brand__name { animation: enter-up .6s var(--ease) backwards .35s; }
+.is-ready .site-header .brand__name small { animation: year-open .8s var(--ease) backwards .6s; }
+
+/* Hover */
+.site-header .brand:hover .brand__mark { transform: rotate(-8deg) scale(1.07); }
+.site-header .brand__light { transition: transform .25s var(--ease) calc(var(--n) * 70ms); }
+.site-header .brand:hover .brand__light { transform: translateY(-1.5px) scale(1.18); }
+.site-header .brand:hover .brand__shine { transform: translateX(44px); transition: transform .7s var(--ease); }
+
+@keyframes logo-land {
+  0% { opacity: 0; transform: rotate(-140deg) scale(.3); }
+  60% { opacity: 1; transform: rotate(12deg) scale(1.08); }
+  80% { transform: rotate(-4deg) scale(.98); }
+}
+@keyframes logo-letters { from { opacity: 0; transform: scale(.4); } }
+@keyframes light-on {
+  0% { opacity: .12; transform: scale(.6); }
+  60% { opacity: 1; transform: scale(1.3); }
+}
+@keyframes light-scan { 0%, 10%, 100% { opacity: 1; } 4% { opacity: .2; } }
+@keyframes logo-shine { from { transform: translateX(-44px); } to { transform: translateX(44px); } }
+@keyframes year-open { from { opacity: 0; letter-spacing: .6em; } }
+
 /* ---------- 3. Variantes de aparición al hacer scroll ---------- */
 .reveal[data-reveal="left"] { transform: translateX(-28px); }
 .reveal[data-reveal="right"] { transform: translateX(28px); }
@@ -171,6 +214,7 @@ a.contact-item:hover .icon-badge { transform: translateX(3px) scale(1.06); }
 /* ---------- 6. Movimiento reducido ---------- */
 @media (prefers-reduced-motion: reduce) {
   .js [data-enter], .js .hero__chip { opacity: 1; }
+  .site-header .brand, .site-header .brand * { animation: none !important; }
   .hero h1 span::after { transform: scaleX(1); }
   .partners__track.is-marquee { animation: none; flex-wrap: wrap; justify-content: center; width: auto; }
   .partners__track.is-marquee [aria-hidden="true"] { display: none; }

@@ -55,20 +55,25 @@
   };
 
   /* Logo vectorizado: insignia "SP" con las tres luces del original.
-     mono = true → versión monocromática (hereda currentColor). */
+     mono = true → versión monocromática (hereda currentColor).
+     Las piezas llevan clases (brand__plate, brand__letters, brand__light,
+     brand__shine) para animarlas desde animations.css. Las transformaciones
+     del dibujo van en <g> padres para no chocar con las de CSS. */
   SP.logoMark = function (mono) {
     const plate = mono ? "currentColor" : "var(--logo-plate)";
     const lights = mono ? ["currentColor", "currentColor", "currentColor"] : ["#ef4444", "#f5c518", "#22c55e"];
     const lightOpacity = mono ? ' opacity=".55"' : "";
+    const plateRect = '<rect x="6" y="3" width="36" height="42" rx="9"/>';
+    const light = (x, i) => '<rect class="brand__light" style="--n:' + i + '" x="' + x + '" y="33" width="6.5" height="5" rx="1.2" fill="' + lights[i] + '"/>';
     return (
-      '<svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true">' +
-      '<rect x="6" y="3" width="36" height="42" rx="9" transform="rotate(-8 24 24)" style="fill:' + plate + '"/>' +
-      '<text x="24" y="27" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="19" fill="' + (mono ? "var(--surface)" : "#fff") + '" transform="rotate(-8 24 24)">SP</text>' +
-      '<g transform="rotate(-8 24 24)"' + lightOpacity + ">" +
-      '<rect x="12" y="33" width="6.5" height="5" rx="1.2" fill="' + lights[0] + '"/>' +
-      '<rect x="20.75" y="33" width="6.5" height="5" rx="1.2" fill="' + lights[1] + '"/>' +
-      '<rect x="29.5" y="33" width="6.5" height="5" rx="1.2" fill="' + lights[2] + '"/>' +
-      "</g></svg>"
+      '<svg class="brand__mark' + (mono ? " brand__mark--mono" : "") + '" viewBox="0 0 48 48" aria-hidden="true">' +
+      (mono ? "" : '<defs><clipPath id="sp-plate-clip"><g transform="rotate(-8 24 24)">' + plateRect + "</g></clipPath></defs>") +
+      '<g transform="rotate(-8 24 24)"><g class="brand__plate" style="fill:' + plate + '">' + plateRect + "</g></g>" +
+      '<g class="brand__letters"><text x="24" y="27" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="19" fill="' + (mono ? "var(--surface)" : "#fff") + '" transform="rotate(-8 24 24)">SP</text></g>' +
+      '<g transform="rotate(-8 24 24)"' + lightOpacity + ">" + light(12, 0) + light(20.75, 1) + light(29.5, 2) + "</g>" +
+      // Destello diagonal que cruza la placa (solo versión a color)
+      (mono ? "" : '<g clip-path="url(#sp-plate-clip)"><g class="brand__shine"><rect x="4" y="-10" width="7" height="70" fill="#fff" opacity=".28" transform="rotate(24 24 24)"/></g></g>') +
+      "</svg>"
     );
   };
 
