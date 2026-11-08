@@ -43,7 +43,7 @@
   --radius-pill: 999px;
   --container: 1180px;
   --gutter: 16px;
-  --header-h: 68px;
+  --header-h: 92px;   /* alto del header (cabe el logo de 66px) */
   --section-y: clamp(64px, 9vw, 112px);
 
   /* Tipografía */
