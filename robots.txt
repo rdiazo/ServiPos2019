@@ -1,0 +1,7 @@
+# Permite a los buscadores indexar todo el sitio, salvo el contador de visitas
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /tools/
+
+Sitemap: https://servipos2019.com/sitemap.xml

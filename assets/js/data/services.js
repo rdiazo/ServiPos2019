@@ -10,14 +10,14 @@ window.SP.data.services = [
     id: "pos",
     icon: "pos",
     title: "Puntos de Venta (POS)",
-    summary: "Reparación multimarca, programación, diagnóstico de fallas y mantenimiento preventivo.",
-    highlights: ["Reparación multimarca", "Programación y configuración", "Mantenimiento preventivo"],
+    summary: "Soporte técnico, venta de POS, reparación multimarca, programación y mantenimiento preventivo.",
+    highlights: ["Venta de equipos POS", "Reparación multimarca", "Mantenimiento preventivo"],
     specs: {
       includes: [
         "Diagnóstico de fallas de hardware y comunicación",
         "Reparación de tarjeta lógica, teclado, pantalla, impresora y lector de chip/banda",
         "Programación, actualización y configuración del terminal",
-        "Instalación y puesta en marcha en el comercio",
+        "Venta de equipos POS con instalación y puesta en marcha en el comercio",
         "Planes de mantenimiento preventivo por contrato",
       ],
       brands: ["PAX", "Centerm", "Feitian", "Otras marcas"],
@@ -27,7 +27,7 @@ window.SP.data.services = [
   {
     id: "atm",
     icon: "atm",
-    title: "Cajeros Automáticos",
+    title: "Cajeros Automáticos (ATM)",
     summary: "Mantenimiento correctivo, instalación de módulos, calibración y adecuación operativa.",
     highlights: ["Mantenimiento correctivo", "Instalación de módulos", "Calibración"],
     specs: {

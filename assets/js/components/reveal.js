@@ -22,7 +22,7 @@
           en.target.classList.add("is-visible");
           io.unobserve(en.target);
         }),
-        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+        { threshold: 0, rootMargin: "0px 0px -40px 0px" } // threshold 0: también aparecen los elementos más altos que la pantalla
       );
       items.forEach((el) => io.observe(el));
     },

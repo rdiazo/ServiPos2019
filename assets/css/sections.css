@@ -163,6 +163,21 @@ a.contact-item:hover { background: var(--surface-2); }
 }
 .map__pin strong { display: block; font-size: var(--fs-sm); }
 
+/* ---------- Preguntas frecuentes (acordeón nativo <details>) ---------- */
+.faq { display: grid; gap: 8px; }
+@media (min-width: 960px) { .faq { grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; } }
+.faq__list { display: grid; gap: 10px; }
+.faq__item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); transition: border-color .25s, box-shadow .25s; }
+.faq__item[open] { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+.faq__item summary {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 20px;
+  list-style: none; cursor: pointer; font-weight: 650; color: var(--text);
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--primary); transition: transform .3s var(--ease); }
+.faq__item[open] summary svg { transform: rotate(45deg); }
+.faq__item p { padding: 0 20px 20px; font-size: var(--fs-sm); animation: rise .35s var(--ease); }
+
 /* ---------- Banda CTA (contacto) ---------- */
 .cta-band {
   position: relative; overflow: hidden; display: grid; gap: 24px; align-items: center;

@@ -70,6 +70,24 @@ guarda el conteo en `api/data/visitas.json`, protegido por `api/data/.htaccess`.
 - Para ocultarlo: deja vacío `visits.endpoint` en `config.js`; para quitar "· N hoy": `showToday: false`.
 - En local, `tools/dev_server.py` imita el PHP con el mismo archivo.
 
+## Buscadores (SEO)
+
+Palabras clave trabajadas: *soporte a puntos de venta*, *cajeros automáticos*, *venta de POS*, *ATM*, *Maracay*.
+
+- Cada página tiene `<title>`, `description`, URL canónica y vista previa para redes (Open Graph).
+- `index.html` incluye datos estructurados (JSON-LD de schema.org): negocio local con dirección,
+  horario, teléfono y catálogo de servicios, más las preguntas frecuentes.
+- La sección **Preguntas frecuentes** repite el texto del JSON-LD: si cambias una respuesta, cámbiala en ambos lugares.
+- `robots.txt` y `sitemap.xml` en la raíz (al añadir una página, agrégala al sitemap).
+- Todas las URLs apuntan a `https://servipos2019.com`. Si el dominio es otro, búscalo y reemplázalo en
+  los tres `.html`, `robots.txt` y `sitemap.xml`.
+
+Después de publicar:
+1. Registrar el sitio en **Google Search Console** y **Bing Webmaster Tools** y enviar `sitemap.xml`.
+2. Crear o reclamar la ficha de **Google Business Profile** (Google Maps) con la misma dirección y teléfono:
+   es lo que más pesa para búsquedas locales como "soporte punto de venta Maracay".
+3. Validar los datos estructurados en https://search.google.com/test/rich-results
+
 ## Pendiente antes de publicar
 
 - `data/partners.js`: confirmar la cifra "+1,000 equipos atendidos".
