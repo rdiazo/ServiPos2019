@@ -28,6 +28,7 @@ assets/
     animations.css   Toda la animación: entrada del hero, apariciones al scroll, microinteracciones, carrusel
   img/               Logo original, favicon vectorizado, fotos del equipo, logos de aliados
   js/
+    theme-init.js    Tema según la hora del visitante (se carga en el <head> antes de pintar)
     config.js        ⭐ Teléfonos, WhatsApp, correo, dirección, horario, menú, endpoint de formularios
     utils.js         Íconos SVG lineales, logo vectorizado y helpers (WhatsApp, correo, mapa, toast)
     data/            Contenido editable: services · team · partners (+ métricas)
@@ -47,6 +48,7 @@ así todas las páginas comparten el mismo `main.js`.
 | Cambiar textos/especificaciones de servicios | `assets/js/data/services.js` |
 | Cambiar opciones del diagnóstico rápido    | `EQUIPMENT` en `assets/js/components/diagnostic.js` |
 | Añadir un campo al formulario de contacto  | Agrega el `<input>` con `name` y `<label>` en `contacto.html`; se envía solo |
+| Cambiar a qué hora cambia el tema         | `DAY_START` / `DAY_END` en `assets/js/theme-init.js` (de día oscuro, de noche claro) |
 | Cambiar colores de marca                   | `:root` y `:root[data-theme="dark"]` en `assets/css/base.css` |
 | Animar un elemento al hacer scroll        | Clase `reveal` (+ `data-reveal="left / right / zoom / fade"` opcional) |
 | Añadir un ícono                            | `ICONS` en `assets/js/utils.js` y úsalo con `<span data-icon="nombre"></span>` |

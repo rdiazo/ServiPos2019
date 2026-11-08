@@ -171,19 +171,8 @@
   </script>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
-  <!-- Tema antes de pintar (evita parpadeo). Ver components/theme.js -->
-  <script>
-    (function () {
-      var t; try { t = localStorage.getItem("sp-theme"); } catch (e) {}
-      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", t);
-      // Animaciones de entrada (animations.css): .js oculta, .is-ready las dispara
-      document.documentElement.classList.replace("no-js", "js");
-      addEventListener("DOMContentLoaded", function () {
-        requestAnimationFrame(function () { document.documentElement.classList.add("is-ready"); });
-      });
-    })();
-  </script>
+  <!-- Tema según la hora (de día oscuro, de noche claro) antes de pintar -->
+  <script src="assets/js/theme-init.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

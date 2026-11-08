@@ -1,18 +1,16 @@
 /* ==========================================================================
-   components/theme.js · modo claro / oscuro
+   components/theme.js · botón de modo claro / oscuro
    --------------------------------------------------------------------------
-   Prioridad: elección guardada del usuario → preferencia del sistema.
-   El <head> de cada página aplica el tema antes de pintar (evita parpadeo);
-   este módulo solo gestiona el botón y los cambios del sistema.
+   Prioridad: elección del botón en esta visita → hora del dispositivo
+   (de día oscuro, de noche claro; la regla vive en assets/js/theme-init.js,
+   que aplica el tema antes de pintar).
+   Si el visitante no tocó el botón, el tema cambia solo al pasar la hora
+   límite con la página abierta.
    ========================================================================== */
 (function (SP) {
   "use strict";
-  const KEY = "sp-theme";
-  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  const T = window.SPTheme;
 
-  function stored() {
-    try { return localStorage.getItem(KEY); } catch (e) { return null; }
-  }
   function apply(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     const meta = document.querySelector('meta[name="theme-color"]');
@@ -21,18 +19,18 @@
 
   SP.components.theme = {
     init() {
-      apply(stored() || (media.matches ? "dark" : "light"));
+      apply(T.manual() || T.clockTheme());
 
       document.querySelectorAll("[data-theme-toggle]").forEach((btn) =>
         btn.addEventListener("click", () => {
           const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
           apply(next);
-          try { localStorage.setItem(KEY, next); } catch (e) { /* modo privado: solo para esta visita */ }
+          try { sessionStorage.setItem(T.KEY, next); } catch (e) { /* modo privado: solo hasta recargar */ }
         })
       );
 
-      // Si el usuario nunca eligió, seguimos al sistema en vivo
-      media.addEventListener("change", (e) => { if (!stored()) apply(e.matches ? "dark" : "light"); });
+      // Revisa la hora cada minuto (p. ej. a las 6:00 pm pasa a claro)
+      setInterval(() => { if (!T.manual()) apply(T.clockTheme()); }, 60000);
     },
   };
 })(window.SP);
