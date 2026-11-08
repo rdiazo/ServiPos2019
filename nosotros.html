@@ -14,6 +14,11 @@
       var t; try { t = localStorage.getItem("sp-theme"); } catch (e) {}
       if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       document.documentElement.setAttribute("data-theme", t);
+      // Animaciones de entrada (animations.css): .js oculta, .is-ready las dispara
+      document.documentElement.classList.replace("no-js", "js");
+      addEventListener("DOMContentLoaded", function () {
+        requestAnimationFrame(function () { document.documentElement.classList.add("is-ready"); });
+      });
     })();
   </script>
 
@@ -25,6 +30,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
 </head>
 
 <body data-page="about">
@@ -35,10 +41,10 @@
     <!-- ===== Encabezado de página ===== -->
     <section class="page-hero">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Ruta"><a href="index.html">Inicio</a><span>/</span><span>Nosotros</span></nav>
-        <span class="eyebrow">Somos ServiPos 2019</span>
-        <h1>Más de 10 años cuidando la infraestructura de pago del país.</h1>
-        <p>Empresa proveedora de servicios técnicos de instalación, reparación, mantenimiento preventivo y suministro de partes, piezas y consumibles para las plataformas de pago electrónico del Sistema Financiero Nacional.</p>
+        <nav class="breadcrumb" aria-label="Ruta" data-enter style="--i:0"><a href="index.html">Inicio</a><span>/</span><span>Nosotros</span></nav>
+        <span class="eyebrow" data-enter style="--i:1">Somos ServiPos 2019</span>
+        <h1 data-enter style="--i:2">Más de 10 años cuidando la infraestructura de pago del país.</h1>
+        <p data-enter style="--i:3">Empresa proveedora de servicios técnicos de instalación, reparación, mantenimiento preventivo y suministro de partes, piezas y consumibles para las plataformas de pago electrónico del Sistema Financiero Nacional.</p>
       </div>
     </section>
 
@@ -50,22 +56,22 @@
     <!-- ===== Misión / Fortaleza / Compromiso ===== -->
     <section class="section" aria-labelledby="mission-title">
       <div class="container">
-        <header class="section-head">
+        <header class="section-head reveal">
           <span class="eyebrow">Nuestra empresa</span>
           <h2 id="mission-title">Experiencia, probidad y mística.</h2>
         </header>
         <div class="pillars">
-          <article class="card reveal">
+          <article class="card reveal" data-reveal="zoom">
             <span class="icon-badge"><span data-icon="shield"></span></span>
             <h3>Misión</h3>
             <p>Fortalecer la economía del país prestando servicios integrales de alta calidad, comprometidos con la protección y seguridad de los terminales de puntos de venta, con un servicio técnico especializado y leal a nuestras políticas y acuerdos.</p>
           </article>
-          <article class="card reveal">
+          <article class="card reveal" data-reveal="zoom">
             <span class="icon-badge"><span data-icon="chip"></span></span>
             <h3>Nuestra fortaleza</h3>
             <p>La comprobada experiencia, probidad y mística de nuestro personal técnico, junto a un stock de partes y repuestos originales certificados por sus fabricantes.</p>
           </article>
-          <article class="card reveal">
+          <article class="card reveal" data-reveal="zoom">
             <span class="icon-badge icon-badge--accent"><span data-icon="checkCircle"></span></span>
             <h3>Compromiso</h3>
             <p>Seriedad, seguridad, puntualidad y un costo estable: tarifas pactadas al suscribir el convenio, con ajustes semestrales o según la cantidad de equipos.</p>
@@ -77,7 +83,7 @@
     <!-- ===== Equipo completo ===== -->
     <section class="section section--alt" id="equipo" aria-labelledby="team-title">
       <div class="container">
-        <header class="section-head">
+        <header class="section-head reveal">
           <span class="eyebrow">Nuestro equipo</span>
           <h2 id="team-title">Profesionales con amplia experiencia en POS y cajeros automáticos.</h2>
         </header>
@@ -96,7 +102,7 @@
     <!-- ===== Banda CTA ===== -->
     <section class="section" aria-labelledby="cta-title">
       <div class="container">
-        <div class="cta-band reveal">
+        <div class="cta-band reveal" data-reveal="zoom">
           <div>
             <h2 id="cta-title">Trabajemos juntos.</h2>
             <p>Cuéntanos cuántos equipos tienes y te proponemos un plan de soporte a la medida.</p>
@@ -127,6 +133,7 @@
   <script defer src="assets/js/components/team.js"></script>
   <script defer src="assets/js/components/hydrate.js"></script>
   <script defer src="assets/js/components/visits.js"></script>
+  <script defer src="assets/js/components/motion.js"></script>
   <script defer src="assets/js/components/reveal.js"></script>
   <script defer src="assets/js/main.js"></script>
 </body>

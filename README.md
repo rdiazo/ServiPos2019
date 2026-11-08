@@ -25,6 +25,7 @@ assets/
     layout.css       Contenedor, header fijo, menú móvil, footer, botón flotante de contacto
     components.css   Botones, ghost cards, opciones, formularios, modal, toast, indicador de estado
     sections.css     Un bloque por sección (hero, servicios, equipo, diagnóstico, mapa, contacto…)
+    animations.css   Toda la animación: entrada del hero, apariciones al scroll, microinteracciones, carrusel
   img/               Logo original, favicon vectorizado, fotos del equipo, logos de aliados
   js/
     config.js        ⭐ Teléfonos, WhatsApp, correo, dirección, horario, menú, endpoint de formularios
@@ -47,6 +48,7 @@ así todas las páginas comparten el mismo `main.js`.
 | Cambiar opciones del diagnóstico rápido    | `EQUIPMENT` en `assets/js/components/diagnostic.js` |
 | Añadir un campo al formulario de contacto  | Agrega el `<input>` con `name` y `<label>` en `contacto.html`; se envía solo |
 | Cambiar colores de marca                   | `:root` y `:root[data-theme="dark"]` en `assets/css/base.css` |
+| Animar un elemento al hacer scroll        | Clase `reveal` (+ `data-reveal="left / right / zoom / fade"` opcional) |
 | Añadir un ícono                            | `ICONS` en `assets/js/utils.js` y úsalo con `<span data-icon="nombre"></span>` |
 | Añadir una página                          | Copia `nosotros.html`, cambia `<main>` y agrega el enlace en `config.nav` |
 

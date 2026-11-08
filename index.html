@@ -17,6 +17,11 @@
       var t; try { t = localStorage.getItem("sp-theme"); } catch (e) {}
       if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       document.documentElement.setAttribute("data-theme", t);
+      // Animaciones de entrada (animations.css): .js oculta, .is-ready las dispara
+      document.documentElement.classList.replace("no-js", "js");
+      addEventListener("DOMContentLoaded", function () {
+        requestAnimationFrame(function () { document.documentElement.classList.add("is-ready"); });
+      });
     })();
   </script>
 
@@ -28,6 +33,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
 </head>
 
 <body data-page="home">
@@ -42,28 +48,28 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero__grid">
         <div>
-          <span class="status hero__status" data-status>
+          <span class="status hero__status" data-status data-enter style="--i:0">
             <span class="status__dot"></span><span data-status-text>Centro de soporte en Maracay</span>
           </span>
-          <h1 id="hero-title">Infraestructura y soporte técnico para pagos electrónicos <span>sin interrupciones.</span></h1>
-          <p class="hero__lead">Instalación, mantenimiento y reparación de Puntos de Venta (POS) y Cajeros Automáticos para comercios y banca en Venezuela.</p>
+          <h1 id="hero-title" data-enter style="--i:1">Infraestructura y soporte técnico para pagos electrónicos <span>sin interrupciones.</span></h1>
+          <p class="hero__lead" data-enter style="--i:2">Instalación, mantenimiento y reparación de Puntos de Venta (POS) y Cajeros Automáticos para comercios y banca en Venezuela.</p>
 
-          <div class="hero__ctas">
+          <div class="hero__ctas" data-enter style="--i:3">
             <a class="btn btn--primary btn--lg" data-wa href="#" target="_blank" rel="noopener" data-wa-text="Hola ServiPos 2019, quiero hablar con un técnico.">
               <span data-icon="whatsapp"></span>Hablar con un Técnico
             </a>
             <a class="btn btn--outline btn--lg" href="#servicios">Explorar Servicios <span data-icon="arrowRight"></span></a>
           </div>
 
-          <div class="hero__meta">
+          <div class="hero__meta" data-enter style="--i:4">
             <span><span data-icon="checkCircle"></span>Repuestos originales</span>
             <span><span data-icon="checkCircle"></span>Atención multimarca</span>
             <span><span data-icon="checkCircle"></span>Sede física en Maracay</span>
           </div>
         </div>
 
-        <div class="hero__visual">
-          <img src="assets/img/hero-tecnico.png" alt="Terminales de punto de venta y cajero automático atendidos por ServiPos 2019" width="800" height="800" fetchpriority="high">
+        <div class="hero__visual" data-enter="zoom" style="--i:2">
+          <div class="hero__tilt"><img src="assets/img/hero-tecnico.png" alt="Terminales de punto de venta y cajero automático atendidos por ServiPos 2019" width="800" height="800" fetchpriority="high"></div>
           <div class="hero__chip hero__chip--a">
             <span class="icon-badge icon-badge--accent"><span data-icon="shield"></span></span>
             <div>Equipo operativo<small>Diagnóstico certificado</small></div>
@@ -98,7 +104,7 @@
          ========================================================= -->
     <section class="section section--alt" id="servicios" aria-labelledby="services-title">
       <div class="container">
-        <header class="section-head">
+        <header class="section-head reveal">
           <span class="eyebrow">Servicios</span>
           <h2 id="services-title">Tres pilares para que tus cobros nunca se detengan.</h2>
           <p>Servicio integral para comercios y entidades bancarias: desde la instalación hasta el último rollo de papel.</p>
@@ -118,26 +124,26 @@
           <p style="margin-top:14px">Un equipo técnico con más de 10 años de experiencia y stock de repuestos originales certificados por sus fabricantes.</p>
 
           <div class="why__list">
-            <div class="why__item reveal">
+            <div class="why__item reveal" data-reveal="left">
               <span class="icon-badge"><span data-icon="pin"></span></span>
               <div><h3>Atención local directa</h3><p>Sede física en el C.C. Global, Maracay. Trae tu equipo o te visitamos.</p></div>
             </div>
-            <div class="why__item reveal">
+            <div class="why__item reveal" data-reveal="left">
               <span class="icon-badge"><span data-icon="shield"></span></span>
               <div><h3>Técnicos certificados</h3><p>Personal capacitado en hardware transaccional y en las plataformas de pago de la banca.</p></div>
             </div>
-            <div class="why__item reveal">
+            <div class="why__item reveal" data-reveal="left">
               <span class="icon-badge"><span data-icon="bolt"></span></span>
               <div><h3>Respuesta rápida</h3><p>Minimizamos el tiempo de inactividad de tus cobros con diagnóstico ágil y repuestos en stock.</p></div>
             </div>
-            <div class="why__item reveal">
+            <div class="why__item reveal" data-reveal="left">
               <span class="icon-badge"><span data-icon="settings"></span></span>
               <div><h3>Costos estables por convenio</h3><p>Planes de mantenimiento con tarifas pactadas al firmar y ajustes semestrales.</p></div>
             </div>
           </div>
         </div>
 
-        <figure class="why__media reveal">
+        <figure class="why__media reveal" data-reveal="right">
           <img src="assets/img/taller.jpg" alt="Técnica trabajando en el laboratorio de reparación" loading="lazy" width="1920" height="1277">
           <figcaption class="why__badge">
             <span class="icon-badge icon-badge--accent" style="width:40px;height:40px"><span data-icon="chip"></span></span>
@@ -152,7 +158,7 @@
          ========================================================= -->
     <section class="section section--alt" id="equipo" aria-labelledby="team-title">
       <div class="container">
-        <header class="section-head section-head--center">
+        <header class="section-head section-head--center reveal">
           <span class="eyebrow">Nuestro equipo</span>
           <h2 id="team-title">Especialistas al frente de tu tranquilidad operativa.</h2>
         </header>
@@ -168,7 +174,7 @@
          ========================================================= -->
     <section class="section" id="diagnostico" aria-labelledby="diag-title">
       <div class="container diag">
-        <div class="diag__aside">
+        <div class="diag__aside reveal" data-reveal="left">
           <span class="eyebrow">Diagnóstico rápido</span>
           <h2 id="diag-title">Cuéntanos qué falla. Te respondemos por WhatsApp.</h2>
           <p style="margin-top:14px">Tres preguntas y tu solicitud llega directo al técnico de guardia, con toda la información para atenderte sin rodeos.</p>
@@ -178,7 +184,7 @@
             <li><span data-icon="check"></span>Atención a comercios, bancos y particulares</li>
           </ul>
         </div>
-        <div data-mount="diagnostic"></div>
+        <div class="reveal" data-reveal="right" data-mount="diagnostic"></div>
       </div>
     </section>
 
@@ -196,7 +202,7 @@
             <a class="btn btn--outline" data-directions href="#" target="_blank" rel="noopener"><span data-icon="route"></span>Cómo llegar</a>
           </div>
         </div>
-        <div class="map" data-mount="map"></div>
+        <div class="map reveal" data-reveal="zoom" data-mount="map"></div>
       </div>
     </section>
 
@@ -205,7 +211,7 @@
          ========================================================= -->
     <section class="section" aria-labelledby="cta-title">
       <div class="container">
-        <div class="cta-band reveal">
+        <div class="cta-band reveal" data-reveal="zoom">
           <div>
             <h2 id="cta-title">¿Tu comercio necesita un aliado técnico?</h2>
             <p>Escríbenos para planes de mantenimiento, cotizaciones por volumen o suministros.</p>
@@ -241,6 +247,7 @@
   <script defer src="assets/js/components/location.js"></script>
   <script defer src="assets/js/components/hydrate.js"></script>
   <script defer src="assets/js/components/visits.js"></script>
+  <script defer src="assets/js/components/motion.js"></script>
   <script defer src="assets/js/components/reveal.js"></script>
   <script defer src="assets/js/main.js"></script>
 </body>

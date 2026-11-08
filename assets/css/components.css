@@ -29,7 +29,7 @@
 .btn--lg { min-height: 54px; padding: 0 28px; font-size: var(--fs-base); }
 .btn--block { width: 100%; }
 
-.link-arrow { display: inline-flex; align-items: center; gap: 6px; font-weight: 650; font-size: var(--fs-sm); color: var(--primary); }
+.link-arrow { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-weight: 650; font-size: var(--fs-sm); color: var(--primary); }
 .link-arrow svg { width: 16px; height: 16px; transition: transform .2s var(--ease); }
 .link-arrow:hover svg { transform: translateX(3px); }
 

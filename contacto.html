@@ -14,6 +14,11 @@
       var t; try { t = localStorage.getItem("sp-theme"); } catch (e) {}
       if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       document.documentElement.setAttribute("data-theme", t);
+      // Animaciones de entrada (animations.css): .js oculta, .is-ready las dispara
+      document.documentElement.classList.replace("no-js", "js");
+      addEventListener("DOMContentLoaded", function () {
+        requestAnimationFrame(function () { document.documentElement.classList.add("is-ready"); });
+      });
     })();
   </script>
 
@@ -25,6 +30,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
 </head>
 
 <body data-page="contact">
@@ -33,7 +39,7 @@
   <main id="main">
     <section class="page-hero" style="padding-bottom:0">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Ruta"><a href="index.html">Inicio</a><span>/</span><span>Contacto</span></nav>
+        <nav class="breadcrumb" aria-label="Ruta" data-enter style="--i:0"><a href="index.html">Inicio</a><span>/</span><span>Contacto</span></nav>
       </div>
     </section>
 
@@ -41,7 +47,7 @@
       <div class="container contact-page">
 
         <!-- ===== Columna informativa ===== -->
-        <aside class="contact-page__aside">
+        <aside class="contact-page__aside" data-enter style="--i:1">
           <span class="eyebrow">Contacto</span>
           <h1 style="font-size:clamp(2rem,1.4rem + 2.4vw,3rem)">Hablemos de tus equipos de cobro.</h1>
           <p style="margin-top:16px">Déjanos tus datos y te respondemos en un máximo de 48 horas hábiles. Si es urgente, escríbenos por WhatsApp.</p>
@@ -57,7 +63,7 @@
         </aside>
 
         <!-- ===== Formulario (components/contact.js) ===== -->
-        <form class="card form-grid form-grid--2" data-contact-form data-title="Contacto" novalidate>
+        <form class="card form-grid form-grid--2" data-enter style="--i:2" data-contact-form data-title="Contacto" novalidate>
           <p class="form-section-title span-2">Tus datos</p>
           <div class="field"><label for="c-nombre">Nombre y apellido *</label><input class="input" id="c-nombre" name="nombre" autocomplete="name" required><span class="error-msg">Campo obligatorio</span></div>
           <div class="field"><label for="c-telefono">Teléfono / WhatsApp *</label><input class="input" id="c-telefono" name="telefono" type="tel" autocomplete="tel" required><span class="error-msg">Campo obligatorio</span></div>
@@ -100,6 +106,7 @@
   <script defer src="assets/js/components/contact.js"></script>
   <script defer src="assets/js/components/hydrate.js"></script>
   <script defer src="assets/js/components/visits.js"></script>
+  <script defer src="assets/js/components/motion.js"></script>
   <script defer src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,179 @@
+/* ==========================================================================
+   animations.css · capa de movimiento del sitio
+   --------------------------------------------------------------------------
+   Todo lo animado vive aquí, separado del diseño estático. Quitar este
+   archivo deja el sitio funcionando sin animaciones.
+     1. Transición entre páginas (View Transitions)
+     2. Entrada del hero al cargar          → [data-enter] + html.is-ready
+     3. Variantes de aparición al scroll    → .reveal[data-reveal="left|right|zoom|fade"]
+     4. Microinteracciones (botones, tarjetas, íconos, opciones)
+     5. Elementos vivos (barra de progreso, aliados en carrusel, banda CTA,
+        mapa, botón flotante)
+     6. Movimiento reducido (accesibilidad)
+   Los comportamientos JS correspondientes están en components/motion.js.
+   ========================================================================== */
+
+/* ---------- 1. Transición suave entre páginas (Chrome/Edge/Safari recientes) ---------- */
+@view-transition { navigation: auto; }
+.site-header { view-transition-name: site-header; }
+::view-transition-old(root) { animation: vt-out .25s var(--ease) both; }
+::view-transition-new(root) { animation: vt-in .4s var(--ease) both; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* ---------- 2. Entrada del hero ---------- */
+/* Cada elemento lleva data-enter y un índice --i para escalonarse */
+.js [data-enter] { opacity: 0; }
+.is-ready [data-enter] {
+  animation: enter-up .8s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 110ms + 80ms);
+}
+.is-ready [data-enter="zoom"] { animation-name: enter-zoom; animation-duration: 1.1s; }
+.is-ready [data-enter="pop"] { animation-name: enter-pop; animation-duration: .6s; }
+@keyframes enter-up { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes enter-zoom { from { opacity: 0; transform: scale(.92) translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes enter-pop { 0% { opacity: 0; transform: scale(.7) translateY(10px); } 70% { opacity: 1; transform: scale(1.04); } 100% { opacity: 1; transform: none; } }
+
+/* Subrayado que se dibuja bajo "sin interrupciones." */
+.hero h1 span { position: relative; white-space: nowrap; }
+.hero h1 span::after {
+  content: ""; position: absolute; left: 0; right: .35em; bottom: .02em; height: .09em; border-radius: 99px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+}
+.is-ready .hero h1 span::after { transition: transform .9s var(--ease) 1.1s; transform: scaleX(1); }
+
+/* La retícula del fondo se desplaza muy lento */
+.hero::before { animation: grid-drift 40s linear infinite; }
+@keyframes grid-drift { to { background-position: 56px 56px, 56px 56px; } }
+
+/* Inclinación 3D del equipo según el puntero (valores desde motion.js) */
+.hero__visual { perspective: 900px; }
+.hero__visual img { will-change: transform; }
+.hero__tilt { transform: rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg)); transition: transform .4s var(--ease); transform-style: preserve-3d; }
+
+/* Los chips flotan a destiempo con el equipo */
+.js .hero__chip { opacity: 0; }
+.is-ready .hero__chip--a { animation: enter-pop .6s var(--ease) both 1s, bob 6s ease-in-out 1.6s infinite; }
+.is-ready .hero__chip--b { animation: enter-pop .6s var(--ease) both 1.2s, bob 7s ease-in-out 1.8s infinite reverse; }
+@keyframes bob { 50% { transform: translateY(-8px); } }
+
+/* ---------- 3. Variantes de aparición al hacer scroll ---------- */
+.reveal[data-reveal="left"] { transform: translateX(-28px); }
+.reveal[data-reveal="right"] { transform: translateX(28px); }
+.reveal[data-reveal="zoom"] { transform: scale(.94); }
+.reveal[data-reveal="fade"] { transform: none; }
+.reveal.is-visible[data-reveal] { transform: none; }
+
+/* Títulos de sección: la línea del "eyebrow" crece al aparecer */
+.section-head.reveal .eyebrow::before { transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease) .25s; }
+.section-head.reveal.is-visible .eyebrow::before { transform: scaleX(1); }
+
+/* Las métricas suben con un leve rebote */
+.stat.reveal.is-visible .stat__value { animation: settle .7s var(--ease) both; }
+@keyframes settle { 0% { transform: translateY(10px); } 60% { transform: translateY(-3px); } 100% { transform: none; } }
+
+/* ---------- 4. Microinteracciones ---------- */
+/* Botón principal: destello que cruza al pasar el cursor */
+.btn--primary, .btn--whatsapp { position: relative; overflow: hidden; isolation: isolate; }
+.btn--primary::after, .btn--whatsapp::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / .28) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.btn--primary:hover::after, .btn--whatsapp:hover::after { transform: translateX(120%); transition: transform .8s var(--ease); }
+
+/* Flechas que avanzan */
+.btn .i-arrowRight, .link-arrow .i-arrowRight { transition: transform .25s var(--ease); }
+.btn:hover .i-arrowRight, .link-arrow:hover .i-arrowRight { transform: translateX(4px); }
+.btn:hover .i-arrowLeft { transform: translateX(-3px); transition: transform .25s var(--ease); }
+.btn:hover .i-whatsapp { animation: wiggle .5s ease; }
+@keyframes wiggle { 25% { transform: rotate(-12deg); } 75% { transform: rotate(10deg); } }
+
+/* Tarjetas: línea de acento superior + ícono que se eleva */
+.card--interactive { overflow: hidden; }
+.card--interactive::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; z-index: 1;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease);
+}
+.card--interactive:hover::before { transform: scaleX(1); }
+.card .icon-badge, .why__item .icon-badge { transition: transform .35s var(--ease), background-color .3s, color .3s; }
+.card--interactive:hover .icon-badge, .why__item:hover .icon-badge { transform: translateY(-3px) rotate(-6deg); }
+.service:hover .icon-badge { background: var(--primary); color: var(--on-primary); }
+.service__num { transition: color .3s, transform .35s var(--ease); }
+.service:hover .service__num { color: var(--primary); transform: translateY(-2px); }
+
+/* Fichas del equipo: la especialidad aparece desde abajo */
+.member__skill { transition: transform .35s var(--ease), background-color .3s, color .3s; }
+.member:hover .member__skill { transform: translateY(-2px); background: var(--primary); color: var(--on-primary); }
+
+/* Opciones del diagnóstico: "clic" táctil al elegir */
+.option { transition: border-color .2s, background-color .2s, box-shadow .2s, transform .15s var(--ease); }
+.option:active { transform: scale(.97); }
+.option[aria-pressed="true"], .option[aria-checked="true"] { animation: pick .35s var(--ease); }
+@keyframes pick { 50% { transform: scale(1.03); } }
+
+/* Contacto: ícono del ítem se desliza */
+.contact-item .icon-badge { transition: transform .3s var(--ease); }
+a.contact-item:hover .icon-badge { transform: translateX(3px) scale(1.06); }
+
+/* Botones de ícono del header */
+.theme-toggle:hover { transform: rotate(-14deg); }
+.icon-btn:active { transform: scale(.9); }
+.theme-toggle svg { animation: spin-in .45s var(--ease); }
+@keyframes spin-in { from { transform: rotate(-90deg) scale(.6); opacity: 0; } }
+
+/* Éxito del formulario */
+.success-box .icon-badge { animation: enter-pop .6s var(--ease) both; }
+
+/* ---------- 5. Elementos vivos ---------- */
+/* Barra de progreso de lectura (ancho = --progress, desde motion.js) */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 70; pointer-events: none;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transform: scaleX(var(--progress, 0)); transform-origin: left;
+}
+
+/* Aliados en carrusel continuo (motion.js duplica los logos) */
+.partners__track.is-marquee {
+  display: flex; width: max-content; max-width: none; gap: 12px;
+  animation: marquee 32s linear infinite;
+}
+.partners__track.is-marquee .partner { width: 150px; flex-shrink: 0; }
+.partners__viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.partners__viewport:hover .is-marquee { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(calc(-50% - 6px)); } }
+
+/* Banda CTA: anillos que giran y flotan */
+.cta-band::after { animation: ring-spin 18s linear infinite; border-style: dashed; }
+.cta-band::before {
+  content: ""; position: absolute; left: -60px; bottom: -90px; width: 200px; height: 200px; border-radius: 50%;
+  background: rgb(255 255 255 / .06); animation: bob 8s ease-in-out infinite;
+}
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+
+/* Mapa: el marcador cae al aparecer */
+.map.is-visible .map__pin { animation: pin-drop .7s var(--ease) both .2s; }
+@keyframes pin-drop { 0% { opacity: 0; transform: translateY(-20px); } 60% { opacity: 1; transform: translateY(4px); } 100% { transform: none; } }
+
+/* Botón flotante: entra tarde para no distraer y late suave */
+.fab { animation: enter-up .6s var(--ease) both 1.4s; }
+.fab__dot { animation: beat 2.4s ease-in-out infinite; }
+@keyframes beat { 0%, 100% { box-shadow: 0 0 0 3px var(--accent-soft); } 50% { box-shadow: 0 0 0 6px var(--accent-soft); } }
+
+/* Pasos del diagnóstico: la barra avanza con brillo */
+.stepper__bar.is-done span { background: linear-gradient(90deg, var(--primary), var(--accent)); }
+
+/* ---------- 6. Movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-enter], .js .hero__chip { opacity: 1; }
+  .hero h1 span::after { transform: scaleX(1); }
+  .partners__track.is-marquee { animation: none; flex-wrap: wrap; justify-content: center; width: auto; }
+  .partners__track.is-marquee [aria-hidden="true"] { display: none; }
+  .partners__viewport { mask-image: none; -webkit-mask-image: none; }
+  @view-transition { navigation: none; }
+}
