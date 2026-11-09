@@ -7,8 +7,10 @@
    ========================================================================== */
 (function (SP) {
   "use strict";
+  // root: contenedor · dialog: la ventana · body: su contenido · lastFocus: a dónde volver al cerrar
   let root, dialog, body, lastFocus;
 
+  // Elementos que pueden recibir foco con Tab (para mantenerlo dentro del modal)
   const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
   /* Textos legales breves. TODO: revisar con asesoría legal. */
@@ -20,6 +22,7 @@
       "<h2>Términos</h2><p style='margin-top:14px'>La información de este sitio es referencial. Precios, tiempos de respuesta y alcance de cada servicio se confirman por escrito al momento de la cotización o del contrato de mantenimiento. Las marcas mencionadas pertenecen a sus respectivos titulares.</p>",
   };
 
+  /** Crea el modal la primera vez que se usa (no existe en el HTML). */
   function build() {
     root = document.createElement("div");
     root.className = "modal";
@@ -36,6 +39,8 @@
     root.addEventListener("click", (e) => { if (e.target.closest("[data-modal-close]")) close(); });
     root.addEventListener("keydown", (e) => {
       if (e.key === "Escape") close();
+      // Trampa de foco: con Tab al final vuelve al inicio, y viceversa,
+      // para que el teclado no se "escape" a la página de atrás.
       if (e.key !== "Tab") return;
       const items = dialog.querySelectorAll(FOCUSABLE);
       const first = items[0], last = items[items.length - 1];
@@ -44,6 +49,8 @@
     });
   }
 
+  /** Abre el modal con el HTML dado. opts.label = nombre accesible.
+      Bloquea el scroll de la página y lleva el foco al botón cerrar. */
   function open(html, opts) {
     if (!root) build();
     lastFocus = document.activeElement;
@@ -54,6 +61,7 @@
     dialog.querySelector(".modal__close").focus();
   }
 
+  /** Cierra el modal, restaura el scroll y devuelve el foco a donde estaba. */
   function close() {
     if (!root || root.hidden) return;
     root.hidden = true;
@@ -63,6 +71,7 @@
 
   SP.modal = { open, close };
 
+  /* Cualquier enlace con data-legal="privacidad|terminos" abre su texto. */
   SP.components.modal = {
     init() {
       document.addEventListener("click", (e) => {

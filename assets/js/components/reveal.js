@@ -10,6 +10,7 @@
   SP.components.reveal = {
     init() {
       const items = document.querySelectorAll(".reveal");
+      // Navegadores muy antiguos: se muestra todo sin animar
       if (!("IntersectionObserver" in window)) {
         items.forEach((el) => el.classList.add("is-visible"));
         return;
@@ -17,10 +18,11 @@
       const io = new IntersectionObserver(
         (entries) => entries.forEach((en) => {
           if (!en.isIntersecting) return;
+          // Escalonado: cada hermano .reveal espera 60 ms más (máximo 6 pasos)
           const siblings = Array.from(en.target.parentElement.children).filter((c) => c.classList.contains("reveal"));
           en.target.style.transitionDelay = Math.min(siblings.indexOf(en.target), 6) * 60 + "ms";
           en.target.classList.add("is-visible");
-          io.unobserve(en.target);
+          io.unobserve(en.target); // anima una sola vez
         }),
         { threshold: 0, rootMargin: "0px 0px -40px 0px" } // threshold 0: también aparecen los elementos más altos que la pantalla
       );

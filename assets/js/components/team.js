@@ -10,6 +10,7 @@
   "use strict";
   const { esc } = SP.utils;
 
+  /** Ficha de una persona del equipo (foto, nombre, cargo y especialidad). */
   function card(m) {
     return (
       '<article class="card card--interactive member reveal">' +
@@ -25,6 +26,7 @@
   SP.components.team = {
     init() {
       document.querySelectorAll('[data-mount="team"]').forEach((mount) => {
+        // En la portada (data-filter="featured") solo los destacados; en Nosotros, todos
         const list = mount.dataset.filter === "featured" ? SP.data.team.filter((m) => m.featured) : SP.data.team;
         mount.innerHTML = list.map(card).join("");
       });

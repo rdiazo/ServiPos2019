@@ -39,6 +39,8 @@
     return lines.join("\n");
   }
 
+  /** Reemplaza el formulario por un mensaje de confirmación.
+      viaEndpoint = true si los datos ya llegaron al servidor. */
   function success(form, viaEndpoint) {
     form.outerHTML =
       '<div class="card success-box">' +
@@ -62,8 +64,9 @@
       e.preventDefault();
       if (!validate(form)) return;
 
+      // ¿Qué botón se pulsó? data-channel="whatsapp" o "email"
       const channel = (e.submitter && e.submitter.dataset.channel) || "whatsapp";
-      $$('[type="submit"]', form).forEach((b) => (b.disabled = true));
+      $$('[type="submit"]', form).forEach((b) => (b.disabled = true)); // evita envíos dobles
 
       try {
         const sent = await submitToEndpoint("contacto", new FormData(form));
@@ -75,6 +78,7 @@
         console.warn("[contacto] Falló el endpoint, se usa WhatsApp/correo:", err);
       }
 
+      // Sin endpoint (o si falló): se abre WhatsApp o el correo con los datos
       const text = toText(form);
       if (channel === "email") window.location.href = mailLink(form.dataset.title, text.replace(/\*/g, ""));
       else window.open(waLink(text), "_blank", "noopener");

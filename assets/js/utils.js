@@ -79,20 +79,25 @@
 
   /* ---------- Helpers ---------- */
   const utils = {
+    /** Atajos de selección: $ devuelve el primer elemento, $$ un arreglo con todos.
+        root opcional limita la búsqueda a un contenedor. */
     $: (sel, root) => (root || document).querySelector(sel),
     $$: (sel, root) => Array.from((root || document).querySelectorAll(sel)),
 
-    /* Escapa texto antes de insertarlo como HTML */
+    /** Escapa texto antes de insertarlo como HTML (evita que un dato con
+        "<" o comillas rompa la página o inyecte código). */
     esc(str) {
       return String(str ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     },
 
-    /* Enlace de WhatsApp con mensaje prellenado */
+    /** Enlace de WhatsApp (wa.me) con el mensaje ya escrito.
+        Sin mensaje usa config.contact.whatsappDefault. */
     waLink(message) {
       const text = message || SP.config.contact.whatsappDefault;
       return "https://wa.me/" + SP.config.contact.whatsapp + "?text=" + encodeURIComponent(text);
     },
 
+    /** Enlace mailto: al correo corporativo, con asunto y cuerpo opcionales. */
     mailLink(subject, body) {
       const q = [];
       if (subject) q.push("subject=" + encodeURIComponent(subject));
@@ -100,41 +105,51 @@
       return "mailto:" + SP.config.contact.email + (q.length ? "?" + q.join("&") : "");
     },
 
+    /** Enlace tel: para llamar. Quita espacios y puntos: "+58 412 539 31 88" → "tel:+584125393188". */
     telLink(number) {
       return "tel:" + number.replace(/[^\d+]/g, "");
     },
 
+    /** URL del mapa embebido de Google (iframe, no requiere API key). */
     mapEmbed() {
       return "https://www.google.com/maps?q=" + encodeURIComponent(SP.config.contact.address.mapQuery) + "&z=16&output=embed";
     },
+    /** URL de "Cómo llegar" en Google Maps (abre la ruta desde la ubicación del visitante). */
     mapDirections() {
       return "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(SP.config.contact.address.mapQuery);
     },
 
-    /* ¿Estamos en la página de inicio? (para resolver enlaces "#seccion") */
+    /** ¿Estamos en la página de inicio? (marcada con <body data-page="home">) */
     isHome() {
       return !!document.querySelector("[data-page='home']");
     },
+    /** Los enlaces del menú tipo "#servicios" solo existen en el inicio:
+        desde otras páginas se convierten en "index.html#servicios". */
     resolveHref(href) {
       return href.startsWith("#") && !utils.isHome() ? "index.html" + href : href;
     },
 
-    /* Aviso breve en la parte inferior */
+    /** Aviso breve en la parte inferior de la pantalla (desaparece a los 3,2 s).
+        Reutiliza un único elemento .toast para no apilar avisos. */
     toast(message) {
       let el = document.querySelector(".toast");
       if (!el) {
         el = document.createElement("div");
         el.className = "toast";
-        el.setAttribute("role", "status");
+        el.setAttribute("role", "status"); // los lectores de pantalla lo anuncian
         document.body.appendChild(el);
       }
       el.innerHTML = SP.icon("checkCircle") + "<span>" + utils.esc(message) + "</span>";
-      requestAnimationFrame(() => el.classList.add("is-visible"));
-      clearTimeout(el._t);
+      requestAnimationFrame(() => el.classList.add("is-visible")); // un cuadro después, para que la transición se vea
+      clearTimeout(el._t); // si ya había un aviso, reinicia el temporizador
       el._t = setTimeout(() => el.classList.remove("is-visible"), 3200);
     },
 
-    /* Envía datos al endpoint configurado. Devuelve true si se envió. */
+    /** Envía un formulario a config.forms.endpoint (Formspree, Apps Script, API propia).
+        @param {string} type      identifica el formulario ("contacto", "diagnostico")
+        @param {FormData} formData campos a enviar
+        @returns {Promise<boolean>} false si no hay endpoint configurado (el
+        llamador usa entonces WhatsApp/correo); lanza error si el servidor falla. */
     async submitToEndpoint(type, formData) {
       const endpoint = SP.config.forms.endpoint;
       if (!endpoint) return false;

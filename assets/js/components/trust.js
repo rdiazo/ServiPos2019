@@ -9,6 +9,8 @@
   const { esc } = SP.utils;
   const fmt = (n) => n.toLocaleString("en-US"); // 1,000 (formato del brief)
 
+  /** Pinta las métricas con su valor final (correcto aunque no haya
+      animación) y programa el conteo cuando cada cifra entra en pantalla. */
   function renderStats(mount) {
     mount.innerHTML = SP.data.stats
       .map(
@@ -28,10 +30,12 @@
         io.unobserve(en.target);
         animate(en.target);
       });
-    }, { threshold: 0.6 });
+    }, { threshold: 0.6 }); // cuenta cuando se ve el 60 % de la cifra
     mount.querySelectorAll("[data-count]").forEach((el) => io.observe(el));
   }
 
+  /** Cuenta de 0 al valor en 1,4 s. Curva "ease-out" cúbica: arranca
+      rápido y frena al final. requestAnimationFrame = un paso por cuadro. */
   function animate(el) {
     const target = +el.dataset.count, pre = el.dataset.prefix, suf = el.dataset.suffix;
     const start = performance.now(), dur = 1400;
@@ -44,6 +48,8 @@
     requestAnimationFrame(step);
   }
 
+  /** Logos de aliados enlazados a su sitio. motion.js los duplica luego
+      para el carrusel continuo. */
   function renderPartners(mount) {
     mount.innerHTML = SP.data.partners
       .map(

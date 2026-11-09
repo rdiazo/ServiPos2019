@@ -10,6 +10,8 @@
   const { esc, telLink, mailLink, mapEmbed, mapDirections } = SP.utils;
   const icon = SP.icon;
 
+  /** Un renglón de la lista de contacto. Con href es un enlace (los
+      externos abren en otra pestaña); sin href es texto. accent = ícono verde. */
   function item(href, iconName, title, text, accent) {
     const tag = href ? "a" : "div";
     const attrs = href ? ' href="' + href + '"' + (href.startsWith("http") ? ' target="_blank" rel="noopener"' : "") : "";
@@ -20,6 +22,7 @@
     );
   }
 
+  /** Dirección, horario (con indicador en vivo), teléfonos y correo. */
   function contactList() {
     const c = SP.config.contact;
     const phones = c.phones.map((p) => '<a href="' + telLink(p.number) + '" style="display:block">' + esc(p.number) + "</a>").join("");
@@ -31,6 +34,8 @@
     );
   }
 
+  /** Mapa embebido + tarjeta con el local. El estilo gris/oscuro sale del
+      filtro CSS --map-filter, que cambia con el tema. */
   function map() {
     const a = SP.config.contact.address;
     return (

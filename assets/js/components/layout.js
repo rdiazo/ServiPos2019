@@ -11,6 +11,7 @@
   const { esc, waLink, mailLink, telLink, resolveHref } = SP.utils;
   const icon = SP.icon;
 
+  /** Logo + nombre enlazado al inicio. mono = versión de un color (footer). */
   function brand(mono) {
     return (
       '<a class="brand" href="index.html" aria-label="' + esc(SP.config.company.name) + ' · inicio">' +
@@ -19,12 +20,16 @@
     );
   }
 
+  /** <li> con los enlaces de config.nav. cls = clase CSS de cada enlace
+      (el menú de escritorio usa "nav__link"; el móvil y el footer, ninguna). */
   function navLinks(cls) {
     return SP.config.nav
       .map((item) => '<li><a class="' + cls + '" href="' + resolveHref(item.href) + '">' + esc(item.label) + "</a></li>")
       .join("");
   }
 
+  /** HTML del header fijo + menú móvil. Incluye el enlace "Saltar al
+      contenido" (accesibilidad: visible solo al navegar con teclado). */
   function header() {
     return (
       '<a class="skip-link" href="#main">Saltar al contenido</a>' +
@@ -45,11 +50,14 @@
     );
   }
 
+  /** HTML del footer: marca, enlaces, servicios, contacto, estado del
+      horario (status.js) y contador de visitas (visits.js, oculto hasta
+      que el servidor responde). El año del copyright se calcula solo. */
   function footer() {
     const c = SP.config;
     const year = new Date().getFullYear();
     const phones = c.contact.phones
-      .slice(0, 2)
+      .slice(0, 2) // en el footer solo los dos primeros teléfonos
       .map((p) => '<li><a href="' + telLink(p.number) + '">' + esc(p.number) + "</a></li>")
       .join("");
 
@@ -92,6 +100,8 @@
     );
   }
 
+  /** Abre/cierra el menú del botón flotante. Se cierra al hacer clic
+      fuera o con Esc. aria-expanded informa el estado a lectores de pantalla. */
   function initFab() {
     const root = document.querySelector("[data-fab]");
     const toggle = root.querySelector("[data-fab-toggle]");
@@ -100,13 +110,15 @@
       toggle.setAttribute("aria-expanded", String(open));
     };
     toggle.addEventListener("click", (e) => {
-      e.stopPropagation();
+      e.stopPropagation(); // evita que el clic llegue al document y lo cierre de inmediato
       set(!root.classList.contains("is-open"));
     });
     document.addEventListener("click", (e) => { if (!root.contains(e.target)) set(false); });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") set(false); });
   }
 
+  /* Reemplaza los puntos de montaje <div data-mount="header|footer"> por el
+     HTML real y añade el botón flotante al final del <body>. */
   SP.components.layout = {
     init() {
       const h = document.querySelector('[data-mount="header"]');

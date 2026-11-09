@@ -10,12 +10,15 @@
   "use strict";
   const DAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 
+  /** Fecha/hora actual en Venezuela, sin importar la zona del visitante:
+      pasa a UTC y le suma el desfase de config.hours.timezoneOffset (-4). */
   function localNow() {
     const now = new Date();
     const utc = now.getTime() + now.getTimezoneOffset() * 60000;
     return new Date(utc + SP.config.hours.timezoneOffset * 3600000);
   }
 
+  /** 17 → "5:00 pm", 8 → "8:00 am" (formato de 12 horas). */
   function fmtHour(h) {
     const suffix = h >= 12 ? "pm" : "am";
     return ((h + 11) % 12) + 1 + ":00 " + suffix;
@@ -32,6 +35,8 @@
     if (workday && hour >= h.open && hour < h.close) {
       return { open: true, text: "Centro de soporte operativo hoy en Maracay · hasta las " + fmtHour(h.close) };
     }
+    // Cerrado: busca el próximo día laborable (hasta 7 días adelante).
+    // i = 0 cuenta solo si hoy es laborable y aún no ha abierto.
     // Próxima apertura
     let next = 0;
     for (let i = 0; i < 8; i++) {
@@ -42,6 +47,8 @@
     return { open: false, text: "Fuera de horario · abrimos " + when + " a las " + fmtHour(h.open) + " (WhatsApp disponible)" };
   }
 
+  /** Actualiza todos los indicadores [data-status] de la página
+      (hero, sección de ubicación y footer). */
   function render() {
     const s = compute();
     document.querySelectorAll("[data-status]").forEach((el) => {
@@ -54,7 +61,7 @@
   SP.components.status = {
     init() {
       render();
-      setInterval(render, 60000);
+      setInterval(render, 60000); // re-evalúa cada minuto (abre/cierra en vivo)
     },
   };
 })(window.SP);

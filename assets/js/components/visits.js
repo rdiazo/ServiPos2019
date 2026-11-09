@@ -13,6 +13,8 @@
   const KEY = "sp-visit-counted";
   const fmt = (n) => Number(n).toLocaleString("en-US");
 
+  /** ¿Esta pestaña ya sumó su visita? (sessionStorage dura mientras la
+      pestaña esté abierta; los try/catch cubren el modo privado). */
   function alreadyCounted() {
     try { return sessionStorage.getItem(KEY) === "1"; } catch (e) { return false; }
   }
@@ -24,9 +26,10 @@
     async init() {
       const el = document.querySelector("[data-visits]");
       const endpoint = SP.config.visits && SP.config.visits.endpoint;
+      // Sin footer, sin endpoint o abierto con doble clic (sin servidor): no hay contador
       if (!el || !endpoint || location.protocol === "file:") return;
 
-      const hit = !alreadyCounted();
+      const hit = !alreadyCounted(); // true → POST (suma); false → GET (solo lee)
       try {
         const res = await fetch(endpoint, { method: hit ? "POST" : "GET", headers: { Accept: "application/json" } });
         if (!res.ok) throw new Error("HTTP " + res.status);

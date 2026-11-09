@@ -14,7 +14,9 @@
   const { esc, waLink, mailLink, toast, submitToEndpoint } = SP.utils;
   const icon = SP.icon;
 
-  /* ---------- Opciones por tipo de equipo ---------- */
+  /* ---------- Opciones por tipo de equipo ----------
+     label: texto del botón del paso 1 · icon: ícono de utils.js
+     question: título del paso 2 · problems: opciones del paso 2 */
   const EQUIPMENT = {
     pos: {
       label: "Punto de Venta", icon: "pos",
@@ -33,10 +35,13 @@
     },
   };
 
+  // Estado del asistente: paso visible y respuestas elegidas
   const state = { step: 1, equipment: null, problem: null };
-  let root;
+  let root; // contenedor <div data-mount="diagnostic">
 
   /* ---------- Plantilla ---------- */
+  /** HTML completo del asistente: barra de progreso + 4 pasos. Solo un
+      paso es visible a la vez (clase .is-active, controlada por go()). */
   function template() {
     const equipmentOptions = Object.entries(EQUIPMENT)
       .map(([id, e]) => '<button class="option" type="button" aria-pressed="false" data-equipment="' + id + '">' + icon(e.icon) + esc(e.label) + "</button>")
@@ -92,6 +97,8 @@
     );
   }
 
+  /** Campo de texto con etiqueta y mensaje de error. autocomplete ayuda al
+      navegador a rellenar nombre/teléfono guardados. */
   function field(id, name, label, type, autocomplete, required, placeholder) {
     return (
       '<div class="field"><label for="' + id + '">' + label + (required ? " *" : "") + "</label>" +
@@ -102,6 +109,8 @@
   }
 
   /* ---------- Navegación entre pasos ---------- */
+  /** Muestra el paso indicado, avanza la barra de progreso y mueve el foco
+      al primer control del paso (útil con teclado y lectores de pantalla). */
   function go(step) {
     state.step = step;
     root.querySelectorAll(".step").forEach((el) => el.classList.toggle("is-active", +el.dataset.step === step));
@@ -111,6 +120,8 @@
     if (focusTarget && step > 1) focusTarget.focus({ preventScroll: true });
   }
 
+  /** Paso 1 → 2: guarda el equipo, arma la lista de problemas de ese equipo
+      y deja "Continuar" deshabilitado hasta que se elija uno. */
   function selectEquipment(id) {
     state.equipment = id;
     state.problem = null;
@@ -124,6 +135,8 @@
     go(2);
   }
 
+  /** Paso 3: los campos obligatorios necesitan al menos 2 caracteres.
+      Marca los vacíos y pone el foco en el primero con error. */
   function validateContact() {
     let ok = true;
     root.querySelectorAll('[data-step="3"] [required]').forEach((input) => {
@@ -135,6 +148,8 @@
   }
 
   /* ---------- Resumen y mensaje ---------- */
+  /** Respuestas del asistente en un objeto (los nombres son los que llegan
+      al endpoint si config.forms.endpoint está configurado). */
   function values() {
     const f = root.querySelector("[data-diag-form]");
     return {
@@ -148,6 +163,7 @@
     };
   }
 
+  /** Paso 4: tabla de confirmación. Omite las filas que quedaron vacías. */
   function renderSummary() {
     const v = values();
     const rows = [["Equipo", v.equipo], ["Problema", v.problema], ["Detalles", v.detalles], ["Contacto", v.nombre + " · " + v.telefono], ["Comercio", v.empresa], ["Ciudad", v.ciudad]];
@@ -157,6 +173,8 @@
       .join("");
   }
 
+  /** Texto para WhatsApp. Los *asteriscos* se ven en negrita en WhatsApp;
+      filter(Boolean) quita las líneas opcionales que no se llenaron. */
   function message() {
     const v = values();
     return [
@@ -171,6 +189,8 @@
     ].filter(Boolean).join("\n");
   }
 
+  /** Guarda la solicitud en el endpoint (si hay). Si falla, solo avisa en la
+      consola: el envío por WhatsApp/correo sigue funcionando. */
   async function register() {
     try {
       const fd = new FormData();
@@ -182,6 +202,8 @@
   }
 
   /* ---------- Eventos ---------- */
+  /** Conecta los clics de todo el asistente con un solo listener
+      (delegación): equipo, problema, Atrás, Continuar y "por correo". */
   function bind() {
     root.addEventListener("click", (e) => {
       const eq = e.target.closest("[data-equipment]");
@@ -196,7 +218,7 @@
       }
       if (e.target.closest("[data-prev]")) return go(state.step - 1);
       if (e.target.closest("[data-next]")) {
-        if (state.step === 3 && !validateContact()) return;
+        if (state.step === 3 && !validateContact()) return; // no avanza con datos incompletos
         return go(state.step + 1);
       }
       if (e.target.closest("[data-send-mail]")) {
@@ -206,6 +228,7 @@
       }
     });
 
+    // Botón final: abre WhatsApp en otra pestaña con el mensaje armado
     root.querySelector("[data-diag-form]").addEventListener("submit", (e) => {
       e.preventDefault();
       register();
@@ -220,6 +243,8 @@
     });
   }
 
+  /* API pública: la ficha de servicios llama a SP.diagnostic.preselect("pos")
+     para saltar aquí con el equipo ya elegido. */
   SP.diagnostic = {
     preselect(id) {
       if (!root || !EQUIPMENT[id]) return;

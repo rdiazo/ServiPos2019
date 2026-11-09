@@ -11,6 +11,7 @@
   const { esc, waLink } = SP.utils;
   const icon = SP.icon;
 
+  /** Tarjeta de un servicio. i = posición (muestra 01, 02, 03). */
   function card(s, i) {
     return (
       '<article class="card card--interactive service reveal">' +
@@ -26,6 +27,7 @@
     );
   }
 
+  /** Contenido de la ficha técnica que se abre en el modal. */
   function detail(s) {
     return (
       '<div class="spec-head"><span class="icon-badge">' + icon(s.icon) + "</span>" +
@@ -49,6 +51,8 @@
       if (!mount) return;
       mount.innerHTML = SP.data.services.map(card).join("");
 
+      // Un solo listener para todos los botones (delegación de eventos):
+      // funciona también con los botones que están dentro del modal.
       document.addEventListener("click", (e) => {
         const open = e.target.closest("[data-service]");
         if (open) {
@@ -59,7 +63,7 @@
         const diag = e.target.closest("[data-diagnose]");
         if (diag) {
           SP.modal.close();
-          if (SP.diagnostic) SP.diagnostic.preselect(diag.dataset.diagnose);
+          if (SP.diagnostic) SP.diagnostic.preselect(diag.dataset.diagnose); // salta al diagnóstico con el equipo elegido
         }
       });
     },

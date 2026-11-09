@@ -4,12 +4,13 @@
    · Barra de progreso de lectura bajo el header
    · Inclinación 3D del equipo del hero según el puntero (solo mouse)
    · Carrusel continuo de aliados (duplica los logos para el bucle)
-   La entrada del hero (html.is-ready) la activa el script inline del <head>,
+   La entrada del hero (html.is-ready) la activa assets/js/theme-init.js en el <head>,
    así no depende de que este archivo cargue.
    Todo se desactiva con "reducir movimiento" del sistema.
    ========================================================================== */
 (function (SP) {
   "use strict";
+  // true si el visitante pidió "reducir movimiento" en su sistema
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- Barra de progreso ---------- */
@@ -19,6 +20,8 @@
     bar.setAttribute("aria-hidden", "true");
     document.body.appendChild(bar);
 
+    // Como mucho una actualización por cuadro, aunque el scroll dispare
+    // decenas de eventos por segundo (ticking evita trabajo repetido).
     let ticking = false;
     const update = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -40,6 +43,7 @@
     const MAX = 8; // grados
     visual.addEventListener("pointermove", (e) => {
       const r = visual.getBoundingClientRect();
+      // Posición del puntero de -0.5 (izquierda/arriba) a 0.5 (derecha/abajo)
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
       tilt.style.setProperty("--rx", (x * MAX).toFixed(2) + "deg");
@@ -62,6 +66,7 @@
         clone.tabIndex = -1;
         track.appendChild(clone);
       });
+      // Envoltura con overflow oculto y bordes difuminados (animations.css)
       const viewport = document.createElement("div");
       viewport.className = "partners__viewport";
       track.parentNode.insertBefore(viewport, track);
